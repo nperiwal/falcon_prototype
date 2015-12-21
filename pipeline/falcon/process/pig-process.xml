@@ -16,26 +16,28 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-# Eclipse
-.classpath
-.project
-.settings/
 
-# Intellij
-.idea/
-*.iml
-*.iws
-*.ipr
+<process name="pig-process" xmlns="uri:falcon:process:0.1">
+    <clusters>
+        <cluster name="local">
+            <validity start="2013-11-15T00:05Z" end="2013-11-15T01:05Z"/>
+        </cluster>
+    </clusters>
 
-# Mac
-.DS_Store
+    <parallel>1</parallel>
+    <order>FIFO</order>
+    <frequency>minutes(5)</frequency>
+    <timezone>UTC</timezone>
 
-# Maven
-log/
-target/
+    <inputs>
+        <!-- In the pig script, the input paths will be available in a variable 'inpaths' -->
+        <input name="inpaths" feed="in" start="now(0,-5)" end="now(0,-1)"/>
+    </inputs>
 
-#testng
-test-output/
+    <outputs>
+        <!-- In the pig script, the output path will be available in a variable 'outpath' -->
+        <output name="outpath" feed="out" instance="now(0,0)"/>
+    </outputs>
 
-#Other
-bin/
+    <workflow engine="pig" path="/app/pig/wordcount.pig"/>
+</process>

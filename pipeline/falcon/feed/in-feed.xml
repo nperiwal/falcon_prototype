@@ -16,26 +16,24 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-# Eclipse
-.classpath
-.project
-.settings/
+<feed description="input" name="in" xmlns="uri:falcon:feed:0.1">
+    <groups>input</groups>
 
-# Intellij
-.idea/
-*.iml
-*.iws
-*.ipr
+    <frequency>minutes(1)</frequency>
+    <timezone>UTC</timezone>
+    <late-arrival cut-off="hours(1)"/>
 
-# Mac
-.DS_Store
+    <clusters>
+        <cluster name="local">
+            <validity start="2013-01-01T00:00Z" end="2030-01-01T00:00Z"/>
+            <retention limit="hours(2)" action="delete"/>
+        </cluster>
+    </clusters>
 
-# Maven
-log/
-target/
+    <locations>
+        <location type="data" path="/data/in/${YEAR}/${MONTH}/${DAY}/${HOUR}/${MINUTE}"/>
+    </locations>
 
-#testng
-test-output/
-
-#Other
-bin/
+    <ACL owner="testuser-ut-user" group="group" permission="0x644"/>
+    <schema location="/schema/log/log.format.csv" provider="csv"/>
+</feed>
